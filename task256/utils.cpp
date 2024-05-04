@@ -10,8 +10,6 @@
 using namespace std;
 
 void task() {
-
-
 	regex valid_input("^[01]$");
 	string input;
 	char in_option, out_option;
@@ -29,9 +27,7 @@ void task() {
 		} while (!regex_match(input, valid_input));
 		out_option = input[0];
 
-
 		char* dataBuffer = nullptr;
-
 
 		if (in_option == '0') {
 			if (!readFromConsole(dataBuffer) ) {
@@ -46,8 +42,6 @@ void task() {
 			}
 
 		}
-
-
 
 		int firstCommaPos{ -1 };
 		int lastCommaPos{ -1 };
@@ -76,8 +70,6 @@ void task() {
 		}
 
 	} while (in_option != '1');
-
-
 }
 
 
@@ -121,7 +113,6 @@ bool readFromConsole(char*& buffer) {
 		return false;
 	}
 	strcpy_s(buffer, sizeof(input), input.c_str());
-
 	return true;
 }
 
@@ -140,7 +131,6 @@ void writeToFile(const char* output, int& firstCommaPos, int& lastCommaPos) {
 	ofstream outputFile(output);
 	if (!outputFile.is_open()) {
 		cout << "Ошибка при открытии файла для записи" << endl;
-		
 	}
 	else {
 
@@ -157,9 +147,6 @@ void writeToFile(const char* output, int& firstCommaPos, int& lastCommaPos) {
 }
 
 void findCommas(const char* data, int& firstCommaPos, int& lastCommaPos) {
-	firstCommaPos = { -1 };
-	lastCommaPos = { -1 };
-
 	
 	for (int i{ 0 };  data[i] != '\0'; i++) {
 		if (data[i] == ',') {
