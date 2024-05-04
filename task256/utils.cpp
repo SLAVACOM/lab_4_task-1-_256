@@ -40,7 +40,6 @@ void task() {
 				delete[] dataBuffer;
 				continue;
 			}
-
 		}
 
 		int firstCommaPos{ -1 };
@@ -51,8 +50,7 @@ void task() {
 		if (out_option == '0') {
 			printConsole(firstCommaPos, lastCommaPos);
 		}
-		else if(out_option =='1')
-		{
+		else if(out_option =='1'){
 			writeToFile(constants::output, firstCommaPos, lastCommaPos);
 		}
 
@@ -66,15 +64,13 @@ void task() {
 				getline(cin, input);
 			} while (!regex_match(input, valid_input));
 			in_option = input[0];
-
 		}
-
 	} while (in_option != '1');
 }
 
 
 bool readFromFile(const char* filename, char*& buffer) {
-	ifstream file(filename, ios::binary | ios::ate);
+	ifstream file(filename);
 	if (!file.is_open()) {
 		cout << "Ошибка при открытии файла с входными данными" << endl;
 		return false;
@@ -82,7 +78,7 @@ bool readFromFile(const char* filename, char*& buffer) {
 	streamsize size = file.tellg();
 	file.seekg(0, ios::beg);
 
-	buffer = new (nothrow) char[size + 1];
+	buffer = new char[size + 1];
 	if (buffer == nullptr) {
 		cout << "Не удалось выделить память для чтения файла" << endl;
 		file.close();
@@ -118,12 +114,11 @@ bool readFromConsole(char*& buffer) {
 
 void printConsole(int& firstCommaPos, int& lastCommaPos) {
 	if (firstCommaPos != -1) {
-		std::cout << "Номер позиции первой запятой: " << firstCommaPos + 1 << std::endl;
-		std::cout << "Номер позиции последней запятой: " << lastCommaPos + 1 << std::endl;
+		cout << "Номер позиции первой запятой: " << firstCommaPos + 1 << std::endl;
+		cout << "Номер позиции последней запятой: " << lastCommaPos + 1 << std::endl;
 	}
-	else
-	{
-		std::cout << "Запятые отсутствуют!!!" << std::endl;
+	else{
+		cout << "Запятые отсутствуют!!!" << std::endl;
 	}
 }
 
@@ -133,21 +128,18 @@ void writeToFile(const char* output, int& firstCommaPos, int& lastCommaPos) {
 		cout << "Ошибка при открытии файла для записи" << endl;
 	}
 	else {
-
 		if (firstCommaPos != -1) {
 			outputFile << "Номер позиции первой запятой: " << firstCommaPos + 1 << std::endl;
 			outputFile << "Номер позиции последней запятой: " << lastCommaPos + 1 << std::endl;
 		}
-		else
-		{
+		else {
 			outputFile << "Запятые отсутствуют!!!" << std::endl;
 		}
+		outputFile.close();
 	}
-	outputFile.close();
 }
 
 void findCommas(const char* data, int& firstCommaPos, int& lastCommaPos) {
-	
 	for (int i{ 0 };  data[i] != '\0'; i++) {
 		if (data[i] == ',') {
 			if (firstCommaPos == -1) firstCommaPos = i;
